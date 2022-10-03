@@ -4,8 +4,8 @@
 
 ## Ссылки на проект
 
-IP
+IP НУЖНО ДОБАВИТЬ
 
-Frontend https://
+Frontend https:// НУЖНО ДОБАВИТЬ
 
-Backend https://api.
+Backend https://api. НУЖНО ДОБАВИТЬ
