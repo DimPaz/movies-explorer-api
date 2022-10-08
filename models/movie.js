@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// const validator = require('validator');
+const validator = require('validator');
 
 const movieSchema = new mongoose.Schema({
   // страна создания фильма. Обязательное поле-строка.
@@ -36,21 +36,21 @@ const movieSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-    // validate: [validator.isEmail, 'Неправильно заполнено поле'],
+    validate: [validator.isURL, 'Неправильно заполнено поле'],
   },
 
   // ссылка на трейлер фильма. Обязательное поле-строка. Запишите её URL-адресом.
   trailerLink: {
     type: String,
     required: true,
-    // validate: [validator.isEmail, 'Неправильно заполнено поле'],
+    validate: [validator.isURL, 'Неправильно заполнено поле'],
   },
 
   // миниатюрное изображение постера к фильму. Обязательное поле-строка. Запишите её URL-адресом.
   thumbnail: {
     type: String,
     required: true,
-    // validate: [validator.isEmail, 'Неправильно заполнено поле'],
+    validate: [validator.isURL, 'Неправильно заполнено поле'],
   },
 
   // _id пользователя, который сохранил фильм. Обязательное поле.

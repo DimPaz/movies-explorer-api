@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -6,8 +7,10 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 const { dataRouter } = require("./routes/index");
-const errorHandler = require('./middlewares/error');
+const { errors } = require('celebrate');
+const errorHandler = require("./middlewares/error");
 
+// console.log(require('crypto').randomBytes(32).toString('hex'));
 // app.use((req, res, next) => {
 //   req.user = {
 //     _id: "633da61985c062fa8e86713b",
@@ -19,7 +22,7 @@ const errorHandler = require('./middlewares/error');
 app.use("/", dataRouter);
 
 // обработчики ошибок
-// app.use(errors()); // обработчик ошибок celebrate
+app.use(errors()); // обработчик ошибок celebrate
 app.use(errorHandler); // мидлвера обработчика ошибок
 
 async function main() {
