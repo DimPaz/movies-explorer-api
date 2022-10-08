@@ -1,19 +1,18 @@
-const express = require("express");
-const { celebrate, Joi } = require("celebrate");
+const express = require('express');
+const { celebrate, Joi } = require('celebrate');
 
-const regExp =
-  /^(https?:\/\/)?([\w\d-]+\.)*[\w-]+[\\.\\:]\w+([\\/\\?\\=\\&\\#\\.]?[\w-]+)*\/?$/;
+const regExp = /^(https?:\/\/)?([\w\d-]+\.)*[\w-]+[\\.\\:]\w+([\\/\\?\\=\\&\\#\\.]?[\w-]+)*\/?$/;
 
 const movieRouter = express.Router();
 
-const { getMovie, createMovie, delMovie } = require("../controllers/movies");
+const { getMovie, createMovie, delMovie } = require('../controllers/movies');
 
 // возвращает все сохранённые текущим  пользователем фильмы
-movieRouter.get("/", getMovie);
+movieRouter.get('/', getMovie);
 
 // создаёт фильм
 movieRouter.post(
-  "/",
+  '/',
   celebrate({
     body: Joi.object().keys({
       country: Joi.string().required(),
@@ -29,18 +28,18 @@ movieRouter.post(
       nameEN: Joi.string().required(),
     }),
   }),
-  createMovie
+  createMovie,
 );
 
 // удаляет сохранённый фильм по id
 movieRouter.delete(
-  "/:movieId",
+  '/:movieId',
   celebrate({
     params: Joi.object().keys({
-      movieId: Joi.string().alphanum().length(24).hex(), //попробовать .required()
+      movieId: Joi.string().alphanum().length(24).hex(), // попробовать .required()
     }),
   }),
-  delMovie
+  delMovie,
 );
 
 module.exports = {

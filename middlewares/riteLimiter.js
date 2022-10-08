@@ -1,4 +1,4 @@
-const rateLimit = require("express-rate-limit");
+const rateLimit = require('express-rate-limit');
 
 const limiter = rateLimit({
   windowMs: 900000, // 15 минут

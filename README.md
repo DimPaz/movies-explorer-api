@@ -4,8 +4,8 @@
 
 ## Ссылки на проект
 
-IP НУЖНО ДОБАВИТЬ
+IP 51.250.77.251
 
-Frontend https:// НУЖНО ДОБАВИТЬ
+Frontend https://dpazuxin.nomoredomains.icu
 
-Backend https://api. НУЖНО ДОБАВИТЬ
+Backend https://api.dpazuxin.nomoredomains.icu
