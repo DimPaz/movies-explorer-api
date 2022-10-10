@@ -1,5 +1,5 @@
-const bcrypt = require('bcryptjs'); // импортируем модуль bcryptjs
-const jwt = require('jsonwebtoken'); // импортируем модуль jsonwebtoken
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -13,8 +13,6 @@ const duplicateKey = 11000;
 
 // создать пользователя
 const createUser = (req, res, next) => {
-  // eslint-disable-next-line no-console
-  console.log('controller createUser');
   const { name, email, password } = req.body;
   return bcrypt
     .hash(password, 10)
@@ -45,8 +43,6 @@ const createUser = (req, res, next) => {
 
 // залогинить пользователя
 const login = (req, res, next) => {
-  // eslint-disable-next-line no-console
-  console.log('controller loginUser');
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
@@ -67,8 +63,6 @@ const login = (req, res, next) => {
 
 // возвращает информацию о пользователе (email и имя)
 const getUserMe = (req, res, next) => {
-  // eslint-disable-next-line no-console
-  console.log('controller getUsers');
   User.findById(req.user._id)
     .then((user) => res.send(user))
     .catch(next);
@@ -76,9 +70,6 @@ const getUserMe = (req, res, next) => {
 
 // обновляет информацию о пользователе (email и имя)
 const updateProfileUser = (req, res, next) => {
-  // eslint-disable-next-line no-console
-  console.log('controller patchUsers');
-
   const { name, email } = req.body;
   User.findByIdAndUpdate(
     req.user._id,

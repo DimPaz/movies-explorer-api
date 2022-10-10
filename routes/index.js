@@ -6,7 +6,7 @@ const { celebrate, Joi } = require('celebrate');
 const { createUser, login } = require('../controllers/users');
 const { userRouter } = require('./users');
 const { movieRouter } = require('./movies');
-const auth = require('../middlewares/auth'); // мидлвара авторизации
+const auth = require('../middlewares/auth');
 
 const PageNotFoundError = require('../errors/PageNotFoundError'); // 404
 
@@ -17,7 +17,7 @@ dataRouter.post(
   '/signup',
   celebrate({
     body: Joi.object().keys({
-      name: Joi.string().min(2).max(30),
+      name: Joi.string().min(2).max(30).required(),
       email: Joi.string().required().email(),
       password: Joi.string().required(),
     }),

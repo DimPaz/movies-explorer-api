@@ -5,8 +5,6 @@ const ForbiddenError = require('../errors/ForbiddenError'); // 403
 const PageNotFoundError = require('../errors/PageNotFoundError'); // 404
 
 const getMovie = (req, res, next) => {
-  // eslint-disable-next-line no-console
-  console.log('controller getMovie');
   const owner = req.user._id;
   Movie.find({ owner })
     .then((data) => {
@@ -19,8 +17,6 @@ const getMovie = (req, res, next) => {
 };
 
 const createMovie = (req, res, next) => {
-  // eslint-disable-next-line no-console
-  console.log('controller createMovie');
   const {
     country,
     director,
@@ -76,13 +72,14 @@ const createMovie = (req, res, next) => {
 };
 
 const delMovie = (req, res, next) => {
-  // eslint-disable-next-line no-console
-  console.log('controller delMovie');
   const owner = req.user._id;
   const { movieId } = req.params;
 
   Movie.findById(movieId)
     .then((data) => {
+      if (!data) {
+        return next(new PageNotFoundError('Фильм с указанным _id не найдена'));
+      }
       if (!data.owner.equals(owner)) {
         return next(new ForbiddenError('удалить чужой фильм нельзя'));
       }
@@ -92,7 +89,7 @@ const delMovie = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        return next(new BadRequestError('переданы не верные данные'));
+        return next(new BadRequestError('переданы неверные данные'));
       }
       return next(err);
     });

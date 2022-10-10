@@ -2,16 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, NODE_ENV, URL_BD_SECRET } = process.env;
 const app = express();
 
-const helmet = require('helmet'); // шлем
+const helmet = require('helmet');
 const { errors } = require('celebrate');
 const { dataRouter } = require('./routes/index');
 const errorHandler = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
-const limiter = require('./middlewares/riteLimiter'); // riteLimiter
+const limiter = require('./middlewares/riteLimiter');
 
 app.use(requestLogger); // подключаем логгер запросов (самый первый обработчик должен быть)
 app.use(cors);
@@ -34,7 +34,7 @@ app.use(errorHandler); // мидлвера обработчика ошибок
 
 async function main() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+    await mongoose.connect(NODE_ENV === 'production' ? URL_BD_SECRET : 'mongodb://localhost:27017/moviesdb', {
       useNewUrlParser: true,
       useUnifiedTopology: false,
     });

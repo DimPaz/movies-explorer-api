@@ -31,7 +31,6 @@ userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email })
     .select('+password') // this — это модель User
     .then((user) => {
-      // console.log(user)
       // не нашёлся — отклоняем промис
       if (!user) {
         return Promise.reject(
@@ -52,5 +51,4 @@ userSchema.statics.findUserByCredentials = function (email, password) {
     });
 };
 
-// создаём модель и экспортируем её
 module.exports = mongoose.model('user', userSchema);

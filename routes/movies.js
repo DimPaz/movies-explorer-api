@@ -1,7 +1,17 @@
 const express = require('express');
+const validator = require('validator');
 const { celebrate, Joi } = require('celebrate');
 
-const regExp = /^(https?:\/\/)?([\w\d-]+\.)*[\w-]+[\\.\\:]\w+([\\/\\?\\=\\&\\#\\.]?[\w-]+)*\/?$/;
+const BadRequestError = require('../errors/BadRequestError');// 400
+
+// Проверка ссылок на валидность
+const urlValid = (url) => {
+  const validate = validator.isURL(url);
+  if (validate) {
+    return url;
+  }
+  throw new BadRequestError('переданы неверные данные');
+};
 
 const movieRouter = express.Router();
 
@@ -20,9 +30,9 @@ movieRouter.post(
       duration: Joi.number().required(),
       year: Joi.string().required(),
       description: Joi.string().required(),
-      image: Joi.string().required().pattern(regExp), //
-      trailerLink: Joi.string().required().pattern(regExp), //
-      thumbnail: Joi.string().required().pattern(regExp), //
+      image: Joi.string().required().custom(urlValid),
+      trailerLink: Joi.string().required().custom(urlValid),
+      thumbnail: Joi.string().required().custom(urlValid),
       movieId: Joi.number().required(),
       nameRU: Joi.string().required(),
       nameEN: Joi.string().required(),
@@ -36,7 +46,7 @@ movieRouter.delete(
   '/:movieId',
   celebrate({
     params: Joi.object().keys({
-      movieId: Joi.string().alphanum().length(24).hex(), // попробовать .required()
+      movieId: Joi.string().alphanum().length(24).hex(),
     }),
   }),
   delMovie,
